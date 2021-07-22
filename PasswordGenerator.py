@@ -356,7 +356,5 @@ if __name__ == '__main__':
     app.display_gui_digits()
     app.display_gui_special_char()
     app.update_gui()
-    password = app.password
-    print(password)
 
     root.mainloop()
