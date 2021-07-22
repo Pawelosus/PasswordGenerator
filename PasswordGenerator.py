@@ -9,11 +9,11 @@ class App:
         self.password = ""
         self.password_length = 10
         self.uppercase = True
-        self.uppercase_min = 0
+        self.uppercase_min = 1
         self.lowercase = True
-        self.lowercase_min = 0
+        self.lowercase_min = 1
         self.digits = True
-        self.digits_min = 0
+        self.digits_min = 1
         self.special_char = False
         self.special_char_min = 0
         # GUI basic settings
@@ -105,7 +105,7 @@ class App:
             if mode == "add":
                 self.password_length += 1
                 self.password_label_length["text"] = str(self.password_length)
-            elif mode == "subtract" and self.password_length > 1:
+            elif mode == "subtract" and self.password_length > 5:
                 self.password_length -= 1
                 self.password_label_length["text"] = str(self.password_length)
         if category == "uppercase":
@@ -115,6 +115,9 @@ class App:
             elif mode == "subtract" and self.uppercase_min > 0:
                 self.uppercase_min -= 1
                 self.uppercase_label_value["text"] = str(self.uppercase_min)
+                if self.uppercase_min == 0:
+                    self.uppercase = False
+                    self.update_gui_uppercase()
         elif category == "lowercase":
             if mode == "add" and self.uppercase_min + self.lowercase_min + self.digits_min + self.special_char_min < self.password_length:
                 self.lowercase_min += 1
@@ -122,6 +125,9 @@ class App:
             elif mode == "subtract" and self.lowercase_min > 0:
                 self.lowercase_min -= 1
                 self.lowercase_label_value["text"] = str(self.lowercase_min)
+                if self.lowercase_min == 0:
+                    self.lowercase = False
+                    self.update_gui_lowercase()
         elif category == "digits":
             if mode == "add" and self.uppercase_min + self.lowercase_min + self.digits_min + self.special_char_min < self.password_length:
                 self.digits_min += 1
@@ -129,6 +135,9 @@ class App:
             elif mode == "subtract" and self.digits_min > 0:
                 self.digits_min -= 1
                 self.digits_label_value["text"] = str(self.digits_min)
+                if self.digits_min == 0:
+                    self.digits = False
+                    self.update_gui_digits()
         elif category == "special_char":
             if mode == "add" and self.uppercase_min + self.lowercase_min + self.digits_min + self.special_char_min < self.password_length:
                 self.special_char_min += 1
@@ -136,6 +145,9 @@ class App:
             elif mode == "subtract" and self.special_char_min > 0:
                 self.special_char_min -= 1
                 self.special_char_label_value["text"] = str(self.special_char_min)
+                if self.special_char_min == 0:
+                    self.special_char = False
+                    self.update_gui_special_char()
 
     def update_gui(self):
         self.update_gui_uppercase()
@@ -167,6 +179,10 @@ class App:
         return result
 
     def display_gui_password(self):
+        if self.password_length < 5:
+            self.password_length = 5
+            self.password_label_length["text"] = str(self.password_length)
+
         self.generate_password_button.grid(row=0, column=0)
         self.password_label.grid(row=0, column=1)
         self.password_button_subtract.grid(row=0, column=2)
@@ -214,6 +230,7 @@ class App:
         if self.uppercase:
             self.uppercase_label_is_on["text"] = "Yes"
             self.uppercase_checkbox_value.set(True)
+            self.uppercase_min = 1
             self.uppercase_label_value["text"] = self.uppercase_min
             self.uppercase_label_minimum.grid(row=1, column=3)
             self.uppercase_button_subtract.grid(row=1, column=4)
@@ -232,6 +249,7 @@ class App:
         if self.lowercase:
             self.lowercase_label_is_on["text"] = "Yes"
             self.lowercase_checkbox_value.set(True)
+            self.lowercase_min = 1
             self.lowercase_label_value["text"] = self.lowercase_min
             self.lowercase_label_minimum.grid(row=2, column=3)
             self.lowercase_button_subtract.grid(row=2, column=4)
@@ -250,6 +268,7 @@ class App:
         if self.digits:
             self.digits_label_is_on["text"] = "Yes"
             self.digits_checkbox_value.set(True)
+            self.digits_min = 1
             self.digits_label_value["text"] = self.digits_min
             self.digits_label_minimum.grid(row=3, column=3)
             self.digits_button_subtract.grid(row=3, column=4)
@@ -268,6 +287,7 @@ class App:
         if self.special_char:
             self.special_char_label_is_on["text"] = "Yes"
             self.special_char_checkbox_value.set(True)
+            self.special_char_min = 1
             self.special_char_label_value["text"] = self.special_char_min
             self.special_char_label_minimum.grid(row=4, column=3)
             self.special_char_button_subtract.grid(row=4, column=4)
