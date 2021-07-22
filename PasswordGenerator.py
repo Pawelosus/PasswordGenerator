@@ -28,7 +28,7 @@ class App:
         self.password_label = tk.Label(self.window, text="Length:", font=("Arial", 20))
         self.password_button_subtract = tk.Button(self.window, text="-",
                                                   command=lambda: self.button_event("password_length", "subtract"))
-        self.password_label_length = tk.Label(self.window, text="10", font=("Arial", 20))
+        self.password_label_length = tk.Label(self.window, text=str(self.password_length), font=("Arial", 20))
         self.password_button_add = tk.Button(self.window, text="+",
                                              command=lambda: self.button_event("password_length", "add"))
         self.password_box_value = tk.StringVar()
