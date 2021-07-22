@@ -19,7 +19,7 @@ class App:
         # GUI basic settings
         self.parent = parent
         self.window = tk.Toplevel()
-        # self.window.geometry("600x600")
+        self.window.geometry("600x250")
         self.window.title("Password Generator")
         self.window.protocol("WM_DELETE_WINDOW", self.parent.quit)
         # Creating elements
